@@ -18,6 +18,8 @@ jobs:
           python-version: "3.12"
       - run: pip install feedparser pyyaml
       - run: python build.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Commit refreshed pages
         run: |
           git config user.name "asia-fintech-daily bot"
