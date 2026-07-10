@@ -1,0 +1,64 @@
+# Asia Fintech Daily — Khyati's requirement sheet, transcribed to config.
+# One file like this per person = one page. The generator is user-agnostic.
+# Jurisdictions appear on the page in this order. `regulators` feed both the
+# Google News queries and the leadership-changes scan.
+
+name: Khyati
+slug: khyati
+
+jurisdictions:
+  Singapore:
+    regulators: ["MAS", "Monetary Authority of Singapore"]
+  Indonesia:
+    regulators: ["Bank Indonesia", "OJK"]
+  Malaysia:
+    regulators: ["Bank Negara", "Securities Commission Malaysia"]
+  Philippines:
+    regulators: ["Bangko Sentral", "BSP"]
+  Thailand:
+    regulators: ["Bank of Thailand"]
+  Vietnam:
+    regulators: ["State Bank of Vietnam"]
+  Cambodia:
+    regulators: ["National Bank of Cambodia"]
+  India:
+    regulators: ["RBI", "Reserve Bank of India", "SEBI", "NPCI"]
+  China:
+    regulators: ["PBOC", "People's Bank of China", "CSRC"]
+  Uzbekistan:
+    regulators: ["Central Bank of Uzbekistan"]
+  Kazakhstan:
+    regulators: ["National Bank of Kazakhstan", "AFSA"]
+  Turkmenistan:
+    regulators: ["Central Bank of Turkmenistan"]
+
+# Direct feeds (jurisdiction inferred from the item title; else filed under Regional).
+feeds:
+  - name: Finextra
+    url: https://www.finextra.com/rss/rss.aspx
+  - name: Fintech News SG
+    url: https://fintechnews.sg/feed/
+  - name: Fintech News MY
+    url: https://fintechnews.my/feed/
+  - name: Fintech News PH
+    url: https://fintechnews.ph/feed/
+  - name: RBI press releases
+    url: https://www.rbi.org.in/pressreleases_rss.xml
+  - name: Ledger Insights
+    url: https://www.ledgerinsights.com/feed/
+
+# Topic chips, matched by keyword against titles. First match wins the chip;
+# an item can carry several.
+topics:
+  Payments: [payment, payments, remittance, wallet, "qr code", upi, "instant transfer", paynow, promptpay]
+  Policy: [regulator, regulation, licence, license, licensing, policy, framework, sandbox, compliance, guideline, directive, act, ban, fine, penalty]
+  CBDC: [cbdc, "digital currency", "e-cny", "digital rupee", "digital rupiah", "digital tenge"]
+  Digital assets: [crypto, cryptocurrency, stablecoin, token, tokenised, tokenized, "digital asset", bitcoin, exchange]
+  Infrastructure: [infrastructure, settlement, clearing, "iso 20022", interoperab, rail, switch, "real-time gross"]
+  Leadership: [appointed, appoints, appointment, resigns, resignation, "steps down", "named as", "new governor", "new chief", "takes over as"]
+
+leadership_terms: [appointed, appoints, resigns, "steps down", "named as", governor, "chief executive", chairman, "deputy governor"]
+fintech_terms: ['"central bank"', regulator, fintech, payments, CBDC, '"digital assets"', banking]
+
+window: when:2d          # Google News recency window (48h absorbs cron drift)
+max_per_jurisdiction: 40 # firehose, but not infinite scroll

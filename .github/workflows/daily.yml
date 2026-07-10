@@ -1,0 +1,27 @@
+name: Build daily pages
+
+on:
+  schedule:
+    - cron: "15 22 * * *"   # ~6:15am SGT (Actions cron drifts; the 48h window absorbs it)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install feedparser pyyaml
+      - run: python build.py
+      - name: Commit refreshed pages
+        run: |
+          git config user.name "asia-fintech-daily bot"
+          git config user.email "actions@github.com"
+          git add docs/
+          git diff --cached --quiet || git commit -m "Daily refresh $(date -u +%F)"
+          git push
